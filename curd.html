@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CURDS Operations</title>
+    <link rel="stylesheet" href="curd.css">
+    <script defer src="curd.js"></script>
+</head>
+<body>
+    <div class="curd">
+        <div class="head">
+            <h1>curds </h1>
+            <p>product managment system</p>
+        </div>
+        <div class="inputs">
+            <input type="text" placeholder="title" id="title">
+            <div class="price">
+                <input  type="number"  placeholder="price" id="price">
+                <input  type="number" placeholder="taxes" id="taxes">
+                <input  type="number" placeholder="ads" id="ads">
+                <input  type="number" placeholder="discount" id="discount">
+                <small  id="total"></small>
+            </div>
+                <input  type="number" placeholder="count" id="count">
+                <input type="text" id="category" placeholder="category">
+                <button type="submit" id="submit">create</button>
+            
+        </div>
+        <div class="outputs">
+            <div class="searchBlock">
+                <input onkeyup="searchData(this.value)" type="text" id="search" placeholder="Search ">
+                <div class="searchBtn">
+                    <button onclick="getSearchMood(this.id)" class="btn" id="searchByTitle">search By Title</button>
+                    <button onclick="getSearchMood(this.id)" class="btn" id="searchByCateogry">search By Cateogry</button>
+                </div>
+            </div>
+        </div>
+        <div id="deleletAll">
+
+
+        </div>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>price</th>
+                <th>taxes</th>
+                <th>ads</th>
+                <th>discount</th>
+                <th>total</th>
+                <th>category</th>
+                <th><button>update</button></th>
+                <th><button>delelt</button></th>
+            </tr>
+            <tbody id="tbody">
+            
+               
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+    
+
+
+
+
+</body>
+</html>
