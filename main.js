@@ -251,7 +251,7 @@ function searchData(value) {
                 <img src="./images/1.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title mb-2 ">${dataProduct[i].title}</h5> <span class="totalPrice">  ${dataProduct[i].total}  L.E</span>
-                  <p class="card-text mt-2">Cateogry of this product is ${dataProduct[i].category}</p>
+                  <p class="card-text mt-2">Cateogry : ${dataProduct[i].category}</p>
                   <a href="#" class="btn btn-primary" onClick = "updateData(${i})">update</a>
                   <a href="#" class="btn btn-primary ms-5" onClick = "deleteData(${i})">delelet</a>
                 </div>
@@ -268,7 +268,7 @@ function searchData(value) {
                 <img src="./images/1.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title mb-2 ">${dataProduct[i].title}</h5> <span class="totalPrice">  ${dataProduct[i].total}  L.E</span>
-                  <p class="card-text mt-2">Cateogry of this product is ${dataProduct[i].category}</p>
+                  <p class="card-text mt-2">Cateogry :  ${dataProduct[i].category}</p>
                   <a href="#" class="btn btn-primary" onClick = "updateData(${i})">update</a>
                   <a href="#" class="btn btn-primary ms-5" onClick = "deleteData(${i})">delelet</a>
                 </div>
