@@ -92,13 +92,14 @@ th button:hover {
     letter-spacing: 0px;
     background-color:rgb(103, 5, 128);
 }
-.ui {
+.uiContainer {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     
+    
 } 
-.ui .card {
+.uiContainer .card {
     margin: 10px 20px;
 }
 .totalPrice {

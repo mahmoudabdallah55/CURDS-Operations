@@ -1,4 +1,6 @@
-let title = document.getElementById("title");
+ // get all elements in html file by using dom object
+ 
+ let title = document.getElementById("title");
 let price = document.getElementById("price");
 let taxes = document.getElementById("taxes");
 let ads = document.getElementById("ads");
@@ -8,44 +10,35 @@ let category = document.getElementById("category");
 let submit = document.getElementById("submit");
 let priceInputs = document.querySelectorAll(".price input");
 let ui = document.getElementById("ui");
-
 let fileInput = document.getElementById("file");
-
-
-
-
 
 let mode = "create";
 let publicI;
+let products = localStorage.getItem("products")?JSON.parse(localStorage.getItem("products")):[];
+// [objects] or []
 
 
-// get image path
+
+// get image path to display in html ui 
+// input type file is like an array that have all files
+// let arrImages ; 
 // fileInput.addEventListener("change",(event)=>{
-//     let selectedFile = event.target.files[0];
-//     let fileNAme = selectedFile.name;
-//     console.log(fileNAme);
+//     reader = new FileReader(); // FileReader class[constrcture function ] for read files from locla folder 
+    
+//     reader.readAsDataURL(event.target.files[0]);
+//     reader.onload =(event)=> {
+//      arrImages = event.target.result;
+//     }
+
 // })
-let arrImages ;
-fileInput.addEventListener("change",(event)=>{
-    reader = new FileReader();
-    reader.readAsDataURL(fileInput.files[0]);
-    reader.onload =(event)=> {
-      
-     arrImages = reader.result;
-
-    }
-
-})
- 
 
 
-
-
+// apply event keyup for each input in price block
 priceInputs.forEach((input)=> {
     input.addEventListener("keyup",getTotal)
 })
 
-// pric.addEventListener ("keyup",getTotal);
+
 
 //get total price
 function getTotal () {
@@ -63,43 +56,42 @@ function getTotal () {
 
 
 //create product
-let dataProduct; // data strcture for sorting data 
-if(localStorage.product != null) {
-  dataProduct = JSON.parse(localStorage.product) // data in localStorage must be in string formate 
-}
-else {
-    dataProduct=[];
-}
+// let dataProduct; // data strcture for sorting data 
+// if(localStorage.product != null) {
+//   dataProduct = JSON.parse(localStorage.product)  
+// }
+// else {
+//     dataProduct=[];
+// }
 
 
-submit. addEventListener("click",createProduct)
+submit.addEventListener("click",createProduct)
 function createProduct () {
     let newProduct = {
         title:title.value.toLowerCase(),
         price:price.value,
         taxes:taxes.value,
         ads:ads.value,
-        img:arrImages,
+        // img:arrImages,
         discount : discount.value,
         total:total.innerHTML,
-        // count:count.value,
         category:category.value.toLowerCase()
     }
     //save data in localstorage
     //count to create miltple products
 
 
-    // let countNum = newProduct.count;
+    
     if(title.value !="" && price.value !="" && category.value != "" ) {
        
             if(mode === "create") {
-                dataProduct.push(newProduct);
-                showData()
+                products.push(newProduct);
+                // showData()
             }
     
             else { 
-                dataProduct[publicI] = newProduct;
-                // count.style.display = "block";
+                products[publicI] = newProduct;
+                
                 submit.innerHTML = "create";
                 mode = "create";
                 
@@ -110,16 +102,13 @@ function createProduct () {
        
     }
     else {
-        window.prompt("Enter Valid Data")
+        alert("Enter Valid Data");
+        return ;
     }
     
-    
-  
-    
-    localStorage.setItem("product", JSON.stringify(dataProduct)  )
-
-
-
+//    products.push(dataProduct)
+console.log(products);
+    localStorage.setItem("products", JSON.stringify(products)  )
    
     showData() 
 }
@@ -141,8 +130,6 @@ function clearInputs() {
     total.innerHTML = "";
     category.value = "" ;
 
-
-
 }
 //read or display in ui
 
@@ -151,13 +138,14 @@ function showData() {
     getTotal();
 
     let table = "";
-  for(let i = 0 ; i < dataProduct.length;i++) {
+    console.log(products);
+  for(let i = 0 ; i < products.length;i++) {
        table  += `   <div class="card mt-0" style="width: 18rem;">
-       <div class="imageCantainer">  <img id="im" src="${dataProduct[i].img}" class="card-img-top img-thumbnail" alt="..."></div>
+       <div class="imageCantainer">  <img id="im" src="./images/1.jpg" class="card-img-top img-thumbnail" alt="..."></div>
       
        <div class="card-body">
-         <h3 class="card-title  ">${dataProduct[i].title}</h3> <h3 class="totalPrice">  ${dataProduct[i].total}  L.E</h3>
-         <h3 class="card-text mb-3">Cateogry : ${dataProduct[i].category}</h3>
+         <h3 class="card-title  ">${products[i].title}</h3> <h3 class="totalPrice">  ${products[i].total}  L.E</h3>
+         <h3 class="card-text mb-3">Cateogry : ${products[i].category}</h3>
          <a href="#" class="btn  " onClick = "updateData(${i})">update</a>
          <a href="#" class="btn  ms-5" onClick = "deleteData(${i})">delelet</a>
        </div>
@@ -165,9 +153,9 @@ function showData() {
     }
     ui.innerHTML = table;
     let deleltAll = document.getElementById("deleletAll");
-    if(dataProduct.length > 0) {
+    if(products.length > 0) {
       deleltAll.innerHTML = `
-      <button onClick = "deleletAll()">delelet All (${dataProduct.length})</button>
+      <button onClick = "deleletAll()">delelet All (${products.length})</button>
       `
     } 
     else {
@@ -179,8 +167,8 @@ function showData() {
 //delelet
 
 function deleteData (i) {
-    dataProduct.splice(i,1);
-    localStorage.product = JSON.stringify(dataProduct);
+    products.splice(i,1);
+    localStorage.setItem("products", JSON.stringify(products)  );
     showData()
 }
 
@@ -188,7 +176,7 @@ function deleteData (i) {
 // delelet All
 function deleletAll() {
     localStorage.clear();
-    dataProduct.splice(0);
+    products=[];
     showData()
 }
 
@@ -198,12 +186,12 @@ function deleletAll() {
 
 //update
 function updateData(i) {
-    title.value= dataProduct[i].title;
-    price.value = dataProduct[i].price;
-    taxes.value =dataProduct[i].taxes;
-    ads.value = dataProduct[i].ads;
-    discount.value = dataProduct[i].discount;
-    category.value = dataProduct[i].category ;
+    title.value = products[i].title;
+    price.value = products[i].price;
+    taxes.value =products[i].taxes;
+    ads.value = products[i].ads;
+    discount.value = products[i].discount;
+    category.value = products[i].category ;
     submit.innerHTML = "update";
     getTotal();
     mode = "update";
@@ -245,18 +233,7 @@ function searchData(value) {
     for(let i = 0 ; i<dataProduct.length;i++) {
     if(searchMood == "title") {
         
-        
-            if(dataProduct[i].title.includes(value.toLowerCase())) {
-                table  += `   <div class="card" style="width: 18rem;">
-                <img src="./images/1.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title mb-2 ">${dataProduct[i].title}</h5> <span class="totalPrice">  ${dataProduct[i].total}  L.E</span>
-                  <p class="card-text mt-2">Cateogry : ${dataProduct[i].category}</p>
-                  <a href="#" class="btn btn-primary" onClick = "updateData(${i})">update</a>
-                  <a href="#" class="btn btn-primary ms-5" onClick = "deleteData(${i})">delelet</a>
-                </div>
-              </div>`
-            }
+    
         
 
     }
@@ -283,6 +260,7 @@ function searchData(value) {
    
 
 }
+
 
 
 
