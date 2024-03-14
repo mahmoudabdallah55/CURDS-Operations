@@ -1,20 +1,24 @@
  // get all elements in html file by using dom object
  
- let title = document.getElementById("title");
-let price = document.getElementById("price");
-let taxes = document.getElementById("taxes");
-let ads = document.getElementById("ads");
-let discount = document.getElementById("discount");
-let total = document.getElementById("total");
-let category = document.getElementById("category");
-let submit = document.getElementById("submit");
-let priceInputs = document.querySelectorAll(".price input");
-let ui = document.getElementById("ui");
-let fileInput = document.getElementById("file");
+ let title = document.getElementById("title"),
+ price = document.getElementById("price"),
+ taxes = document.getElementById("taxes"),
+ ads = document.getElementById("ads"),
+ discount = document.getElementById("discount"),
+ total = document.getElementById("total"),
+ category = document.getElementById("category"),
+ submit = document.getElementById("submit"),
+ priceInputs = document.querySelectorAll(".price input"),
+ ui = document.getElementById("ui"),
+ fileInput = document.getElementById("file");
 
-let mode = "create";
-let publicI;
-let products = localStorage.getItem("products")?JSON.parse(localStorage.getItem("products")):[];
+ let mode = "create",
+ publicI,
+
+
+
+
+ products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
 // [objects] or []
 
 
@@ -196,11 +200,11 @@ function updateData(i) {
     getTotal();
     mode = "update";
     publicI = i;
-    scrollTo({
-        top:0,
-        behavior:"smooth"
+    // scrollTo({
+    //     top:0,
+    //     behavior:"smooth"
 
-    })
+    // })
     
 
 }
@@ -230,22 +234,31 @@ function getSearchMood(id) {
 // searchFunction
 function searchData(value) {
     let table = "";
-    for(let i = 0 ; i<dataProduct.length;i++) {
+    for(let i = 0 ; i<products.length;i++) {
     if(searchMood == "title") {
-        
-    
+        if(products[i].title.includes(value.toLowerCase())) {
+            table  += `   <div class="card" style="width: 18rem;">
+            <img src="./images/1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title mb-2 ">${products[i].title}</h5> <span class="totalPrice">  ${products[i].total}  L.E</span>
+              <p class="card-text mt-2">Cateogry :  ${products[i].category}</p>
+              <a href="#" class="btn btn-primary" onClick = "updateData(${i})">update</a>
+              <a href="#" class="btn btn-primary ms-5" onClick = "deleteData(${i})">delelet</a>
+            </div>
+          </div>`
+        }
         
 
     }
 
     else {
         
-            if(dataProduct[i].category.includes(value.toLowerCase())) {
+            if(products[i].category.includes(value.toLowerCase())) {
                 table  += `   <div class="card" style="width: 18rem;">
                 <img src="./images/1.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title mb-2 ">${dataProduct[i].title}</h5> <span class="totalPrice">  ${dataProduct[i].total}  L.E</span>
-                  <p class="card-text mt-2">Cateogry :  ${dataProduct[i].category}</p>
+                  <h5 class="card-title mb-2 ">${products[i].title}</h5> <span class="totalPrice">  ${products[i].total}  L.E</span>
+                  <p class="card-text mt-2">Cateogry :  ${products[i].category}</p>
                   <a href="#" class="btn btn-primary" onClick = "updateData(${i})">update</a>
                   <a href="#" class="btn btn-primary ms-5" onClick = "deleteData(${i})">delelet</a>
                 </div>
